@@ -174,41 +174,29 @@
 
       <h4>现货架构</h4>
       <div class="arch">
-        <div class="lanes">
-          <div class="lane">
-            <div class="lane-title">交易 / 行情 / 撮合</div>
-            <div class="row">
-              <div class="box navy"><div class="t">客户端 / 业务端</div><div class="s">App · Web</div></div>
-            </div>
-            <div class="arrows">↓</div>
-            <div class="row">
-              <div class="box teal"><div class="t">现货接入 API · Go</div><div class="s">鉴权、下单撤单、行情查询</div></div>
-            </div>
-            <div class="arrows">↓</div>
-            <div class="row">
-              <div class="box muted-box"><div class="t">撮合与行情网关 · C</div><div class="s">既有服务 · 维护联调</div></div>
-            </div>
-            <div class="arrows">↓</div>
-            <div class="row">
-              <div class="box muted-box"><div class="t">Kafka</div></div>
-              <div class="box muted-box"><div class="t">Redis</div></div>
-              <div class="box muted-box"><div class="t">MySQL</div></div>
-            </div>
-            <div class="arrows">↓</div>
-            <div class="row">
-              <div class="box teal"><div class="t">WebSocket 推送</div><div class="s">盘口、成交、订单、账户</div></div>
-              <div class="box teal"><div class="t">定时任务 · Go</div><div class="s">同步 / 快照 / 清理</div></div>
-            </div>
+        <div class="lane" style="border:none;padding:0;background:transparent">
+          <div class="row">
+            <div class="box navy"><div class="t">客户端 / 业务端</div><div class="s">App · Web</div></div>
           </div>
-          <div class="lane">
-            <div class="lane-title">用户 / 资产 / 盈亏</div>
-            <div class="row">
-              <div class="box teal"><div class="t">用户账户服务 · Go</div><div class="s">登录鉴权<br>资产总览、充提划转<br>当日盈亏、历史曲线</div></div>
-            </div>
-            <div class="arrows">↓</div>
-            <div class="row">
-              <div class="box muted-box"><div class="t">托管对接</div><div class="s">外部 HTTP 接口</div></div>
-            </div>
+          <div class="arrows">↓</div>
+          <div class="row">
+            <div class="box teal"><div class="t">现货接入 API · Go</div><div class="s">鉴权、下单撤单、行情查询</div></div>
+            <div class="box teal"><div class="t">用户账户服务 · Go</div><div class="s">登录鉴权、资产总览、充提划转<br>当日盈亏、历史曲线、托管对接</div></div>
+          </div>
+          <div class="arrows">↓</div>
+          <div class="row">
+            <div class="box muted-box"><div class="t">撮合与行情网关 · C</div><div class="s">既有服务 · 维护联调</div></div>
+          </div>
+          <div class="arrows">↓</div>
+          <div class="row">
+            <div class="box muted-box"><div class="t">Kafka</div></div>
+            <div class="box muted-box"><div class="t">Redis</div></div>
+            <div class="box muted-box"><div class="t">MySQL</div></div>
+          </div>
+          <div class="arrows">↓</div>
+          <div class="row">
+            <div class="box teal"><div class="t">WebSocket 推送</div><div class="s">盘口、成交、订单、账户</div></div>
+            <div class="box teal"><div class="t">定时任务 · Go</div><div class="s">同步 / 快照 / 清理</div></div>
           </div>
         </div>
         <div class="arch-note">绿色为本人主要负责（Go）；灰色为既有撮合侧，本人以维护联调为主。</div>
