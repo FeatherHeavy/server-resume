@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>XYJ · Go / C++ 后端工程师</title>
+  <style>
+    :root {
+      --ink: #142033;
+      --muted: #5a6a7c;
+      --line: #d8e1eb;
+      --paper: #f5f7fa;
+      --blue: #1a4f86;
+      --card: #ffffff;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: "PingFang SC", "Hiragino Sans GB", "Noto Sans SC",
+        "Microsoft YaHei", -apple-system, sans-serif;
+      color: var(--ink);
+      background: var(--paper);
+      line-height: 1.65;
+      font-size: 15px;
+    }
+    .wrap { max-width: 860px; margin: 0 auto; padding: 28px 20px 56px; }
+    header {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 22px 24px;
+      margin-bottom: 16px;
+    }
+    h1 { font-size: 26px; font-weight: 700; letter-spacing: .02em; }
+    .role { margin-top: 6px; color: var(--blue); font-weight: 600; font-size: 15px; }
+    .meta { margin-top: 10px; color: var(--muted); font-size: 13.5px; display: flex; flex-wrap: wrap; gap: 6px 14px; }
+    .chips { margin-top: 12px; display: flex; flex-wrap: wrap; gap: 6px; }
+    .chip {
+      font-size: 12px; padding: 3px 10px; border-radius: 999px;
+      background: #eef3fa; color: #16355a; border: 1px solid #d5e0ec;
+    }
+    h2 {
+      font-size: 12px; color: var(--blue); letter-spacing: .14em;
+      margin: 22px 0 8px; font-weight: 700;
+    }
+    .card {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 18px 20px;
+      margin-bottom: 12px;
+    }
+    .job-head { display: flex; justify-content: space-between; gap: 10px; flex-wrap: wrap; align-items: baseline; }
+    .job-head h3 { font-size: 17px; font-weight: 700; }
+    .when { color: var(--muted); font-size: 13px; white-space: nowrap; }
+    .sub { color: var(--muted); font-size: 13.5px; margin: 4px 0 10px; }
+    p { margin-bottom: 8px; }
+    .lead { color: #243044; }
+    ul { padding-left: 18px; }
+    li { margin-bottom: 7px; }
+    li strong { color: #10253f; }
+    .impact {
+      margin: 8px 0 4px;
+      padding: 10px 12px;
+      background: #f3f7fb;
+      border: 1px solid #d5e2ef;
+      border-radius: 8px;
+      font-size: 13.5px;
+    }
+    .impact b { color: var(--blue); }
+    .tech { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
+    .tech span {
+      background: #eef3fa; color: #0f2744; border-radius: 999px;
+      padding: 4px 10px; font-size: 12.5px;
+    }
+    h4 {
+      font-size: 13.5px; color: #0f2744; border-left: 3px solid var(--blue);
+      padding-left: 8px; margin: 14px 0 8px; font-weight: 650;
+    }
+    .arch {
+      background: #f7fafc; border: 1px solid #c9d6e5;
+      border-radius: 12px; padding: 14px 12px 10px; margin: 10px 0 14px;
+    }
+    .lanes { display: grid; grid-template-columns: 1.25fr .85fr; gap: 12px; align-items: stretch; }
+    .lane {
+      background: #fff; border: 1px solid var(--line); border-radius: 10px; padding: 10px 8px 8px;
+    }
+    .lane-title {
+      text-align: center; font-size: 12px; font-weight: 700; color: var(--blue); margin-bottom: 8px;
+    }
+    .row { display: flex; justify-content: center; gap: 8px; flex-wrap: wrap; align-items: stretch; }
+    .box {
+      background: #fff; border: 1px solid #9eb4cc; border-radius: 8px;
+      padding: 8px 10px; min-width: 110px; text-align: center;
+    }
+    .box .t { font-weight: 650; font-size: 13px; color: #0f2744; }
+    .box .s { color: var(--muted); font-size: 11px; margin-top: 2px; line-height: 1.35; }
+    .teal { background: #eef8f8; border-color: #1d7a7a; }
+    .navy { background: #eef3fa; border-color: var(--blue); }
+    .muted-box { background: #f3f6fa; }
+    .arrows { text-align: center; color: var(--blue); padding: 4px 0; font-size: 13px; letter-spacing: 2px; }
+    .core {
+      border: 1.5px dashed var(--blue); border-radius: 10px; padding: 8px; margin: 0 2px;
+    }
+    .core-title { text-align: center; color: var(--blue); font-size: 12px; font-weight: 650; margin-bottom: 6px; }
+    .arch-note { text-align: center; color: var(--muted); font-size: 12px; margin-top: 8px; }
+    .note {
+      margin-top: 18px; font-size: 12px; color: var(--muted);
+      border-top: 1px dashed var(--line); padding-top: 10px;
+    }
+    @media (max-width: 640px) {
+      .wrap { padding: 16px 12px 40px; }
+      h1 { font-size: 22px; }
+      .card { padding: 14px; }
+      .lanes { grid-template-columns: 1fr; }
+      .box { min-width: 100%; }
+      .core .row .box { min-width: calc(50% - 6px); }
+    }
+    @media print {
+      body { background: #fff; }
+      .wrap { max-width: none; padding: 0; }
+      .card, header { border-radius: 0; break-inside: avoid; }
+      .note { display: none; }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <h1>XYJ</h1>
+      <div class="role">Go / C++ 后端工程师｜服务器开发</div>
+      <div class="meta">
+        <span>现居东京</span>
+        <span>技人国签证</span>
+        <span>可立即沟通面试</span>
+        <span>日语 JLPT N1（2026.07）</span>
+      </div>
+      <div class="chips">
+        <span class="chip">Go</span>
+        <span class="chip">C++</span>
+        <span class="chip">高并发网络</span>
+        <span class="chip">HTTP / TCP / UDP / WebSocket</span>
+        <span class="chip">MySQL / Redis / Kafka</span>
+      </div>
+    </header>
+
+    <h2>简介</h2>
+    <div class="card">
+      <p class="lead">
+        后端 / 服务器开发。能独立负责一套服务或关键模块，从设计、实现到上线维护跟到底。
+        简介按后端岗位应具备的素质归纳如下。
+      </p>
+      <ul>
+        <li><strong>独立交付</strong>：能单独承接系统或模块，理清边界与责任，按时交付并可维护。</li>
+        <li><strong>编程与工程</strong>：熟练使用 Go、C++；代码结构清楚，接口约定明确，错误可追踪。</li>
+        <li><strong>网络与协议</strong>：掌握 TCP / UDP / HTTP / WebSocket；了解 IOCP、Select 等常见 I/O 模型，能完成服务端通信与联调。</li>
+        <li><strong>数据与存储</strong>：会用 MySQL、Redis、Kafka；理解缓存、持久化与异步解耦在服务中的分工。</li>
+        <li><strong>协作与沟通</strong>：本人抗压性强，会完善接口与设计说明，善于沟通，能与前后端积极配合，同时能与产品对齐需求并推动联调上线。</li>
+      </ul>
+    </div>
+
+    <h2>工作经历</h2>
+
+    <div class="card">
+      <div class="job-head">
+        <h3>现货交易系统（公司名可面试说明）</h3>
+        <div class="when">2025.12 – 至今 · 东京</div>
+      </div>
+      <div class="sub">后端（Go 为主）｜用户服务 + 现货接入 API + 定时任务｜撮合侧维护联调</div>
+      <p>
+        现货业务服务端由多套服务组成：Go 用户 / 账户服务、Go 现货交易接入 API、Go 定时任务，
+        以及既有的 C 撮合与行情网关。本人主要负责三套 Go 服务的功能开发、接口联调与线上维护；
+        撮合侧参与联调、排障与发布配合，不展开撮合内部实现。
+      </p>
+
+      <h4>现货架构</h4>
+      <div class="arch">
+        <div class="lanes">
+          <div class="lane">
+            <div class="lane-title">交易 / 行情 / 撮合</div>
+            <div class="row">
+              <div class="box navy"><div class="t">客户端 / 业务端</div><div class="s">App · Web</div></div>
+            </div>
+            <div class="arrows">↓</div>
+            <div class="row">
+              <div class="box teal"><div class="t">现货接入 API · Go</div><div class="s">鉴权、下单撤单、行情查询</div></div>
+            </div>
+            <div class="arrows">↓</div>
+            <div class="core">
+              <div class="core-title">撮合与行情网关 · C（维护）</div>
+              <div class="row">
+                <div class="box muted-box"><div class="t">接入网关</div></div>
+                <div class="box muted-box"><div class="t">内存撮合</div></div>
+                <div class="box muted-box"><div class="t">行情</div></div>
+                <div class="box muted-box"><div class="t">历史</div></div>
+              </div>
+            </div>
+            <div class="arrows">↓</div>
+            <div class="row">
+              <div class="box muted-box"><div class="t">Kafka</div></div>
+              <div class="box muted-box"><div class="t">Redis</div></div>
+              <div class="box muted-box"><div class="t">MySQL</div></div>
+            </div>
+            <div class="arrows">↓</div>
+            <div class="row">
+              <div class="box teal"><div class="t">WebSocket 推送</div><div class="s">盘口、成交、订单、账户</div></div>
+              <div class="box teal"><div class="t">定时任务 · Go</div><div class="s">同步 / 快照 / 清理</div></div>
+            </div>
+          </div>
+          <div class="lane">
+            <div class="lane-title">用户 / 资产 / 盈亏</div>
+            <div class="row">
+              <div class="box teal"><div class="t">用户账户服务 · Go</div><div class="s">登录鉴权<br>资产总览、充提划转<br>当日盈亏、历史曲线</div></div>
+            </div>
+            <div class="arrows">↓</div>
+            <div class="row">
+              <div class="box muted-box"><div class="t">托管对接</div><div class="s">外部 HTTP 接口</div></div>
+            </div>
+          </div>
+        </div>
+        <div class="arch-note">绿色为本人主要负责（Go）；虚线框内为既有撮合侧，本人以维护联调为主。</div>
+      </div>
+
+      <ul>
+        <li>
+          <strong>Go 用户 / 账户服务</strong>：
+          账号体系——注册、登录、登出、验证码、密码与安全设置、会话鉴权（JWT）；
+          资产总览——聚合资金账户、现货、合约等相关余额，按资金 / 股票 / 数字资产等分类展示总资产与分布；
+          资金进出——充值地址分配、提现提交 / 校验 / 取消、账户间划转，并对接外部托管相关 HTTP 接口；
+          盈亏与曲线——当日盈亏计算（以日终快照为期初，结合实时持仓估值，并扣除当日充值、提现、买卖等进出，
+          避免进出款扭曲盈亏）；历史资产走势接口（约一年）；
+          对内接口——向其他业务服务提供资产查询、盈亏查询等内部 API；另含活动 / 邀请等相关配套接口维护。
+        </li>
+        <li>
+          <strong>Go 现货接入 API</strong>：
+          面向 App / Web 的交易与查询接口——下单、撤单、批量撤单、当前 / 历史委托、成交明细、余额、
+          行情（Ticker / 深度 / K 线 / 最新成交）等；
+          签名鉴权，区分只读与交易权限，并做限流；
+          标的管理——按资产类型区分币种 / 股票等，支持按类型筛选行情与委托；
+          与撮合网关通过 HTTP 转发交易请求与查询，本服务负责鉴权、参数校验、权限控制与结果封装，
+          不直接修改撮合进程内的订单与余额状态。
+        </li>
+        <li>
+          <strong>Go 定时任务</strong>：
+          定时从撮合 / 网关侧同步委托、成交、余额等到业务库，保证查询侧数据可用；
+          日终资产快照、手续费与运营相关统计；行情 / 报价类缓存更新；
+          超时或需归档订单的清理、自动撤单等后台任务；任务失败可重跑，保证与业务库状态对齐。
+        </li>
+        <li>
+          <strong>撮合与行情网关（维护）</strong>：
+          既有 C 服务承担内存撮合、行情生成、HTTP / WebSocket 推送及历史落库等能力。
+          本人工作以接口联调、异常排查、配置与发布配合、以及 Go 侧与撮合侧数据一致性核对为主；
+          非从零搭建撮合核心，简历不展开订单簿结构与撮合算法细节。
+        </li>
+        <li>
+          <strong>技术与协作</strong>：
+          Go 服务基于 HTTP API，数据使用 MySQL，缓存与会话等使用 Redis，异步消息使用 Kafka（行情 / 成交等链路）；
+          与产品、客户端联调现货交易与账户展示相关需求，跟进上线后的问题修复与小迭代。
+        </li>
+      </ul>
+      <div class="tech">
+        <span>Go</span><span>HTTP</span><span>WebSocket</span><span>MySQL</span><span>Redis</span><span>Kafka</span><span>JWT</span><span>签名鉴权</span><span>C（撮合维护）</span>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="job-head">
+        <h3>微创（中国）Wicrecend</h3>
+        <div class="when">2025.01 – 2025.11 · 北京</div>
+      </div>
+      <div class="sub">派驻字节 PICO｜商业产品：敦煌 VR、恐龙 VR｜已上线运营</div>
+      <p>
+        多人联机 VR 项目（UE5.3）。核心负责 Dedicated Server 侧的多人联机服务：
+        房间内状态同步、复制与局内通信；服务端主体为 C++（DS），
+        与公司大框架对接的部分使用 Go。目标设备为 PICO 头显，项目已发售运营。
+      </p>
+      <ul>
+        <li>
+          <strong>C++ Dedicated Server（主责）</strong>：多人房间接入与生命周期管理；
+          玩家位置、动画、特效等状态在服务端权威同步；局内语音等通道接入；
+          在抖动与带宽受限场景下，对复制内容做优先级处理（关键位姿优先），保证联机可玩。
+        </li>
+        <li>
+          <strong>Go 对接部分</strong>：与公司既有大框架对接时使用 Go，完成账号 / 会话或业务侧接口联调，
+          不承担 DS 内核心同步逻辑。
+        </li>
+        <li>
+          <strong>交付结果</strong>：敦煌 VR、恐龙 VR 完成联机闭环并上线运营。
+        </li>
+      </ul>
+      <div class="tech">
+        <span>C++</span><span>UE5.3 Dedicated Server</span><span>多人状态同步</span><span>Go（框架对接）</span><span>PICO VR</span>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="job-head">
+        <h3>北京优一至简科技有限公司</h3>
+        <div class="when">2021.03 – 2024.12 · 北京</div>
+      </div>
+      <div class="sub">派驻央企三维项目管理系统｜Vue3 + Go + C++</div>
+      <p>
+        面向央企内部的三维项目管理系统。Web 端为 Vue3（非本人开发）；
+        本人负责 Go 用户系统与项目管理等业务服务，以及 C++ 三维数据同步，并完成后端与 Web 的接口联调。
+        涉密场景可提供经授权的脱敏演示。
+      </p>
+      <ul>
+        <li>
+          <strong>Web 客户端（Vue3）</strong>：非本人开发，此处略过。本人负责后端接口对接与联调。
+        </li>
+        <li>
+          <strong>Go 用户系统</strong>：账号注册、登录、登出与密码重置；登录后签发 Token / 会话，
+          请求经中间件校验身份；角色与权限配置（如管理员、项目成员、只读访客），按菜单与接口控制可访问范围；
+          支持组织 / 部门下的人员归属；禁用账号后拒绝后续请求；关键操作写入审计日志（谁、何时、做了什么）。
+        </li>
+        <li>
+          <strong>Go 项目管理 / 管理系统</strong>：项目创建、编辑、归档与查询；项目成员添加 / 移除与角色绑定；
+          项目基础信息、附件与模型元数据的增删改查；字典与系统配置维护；列表分页、条件筛选与权限过滤
+          （只能看到有权限的项目）；业务接口统一返回码与错误信息，便于 Web 端提示。
+        </li>
+        <li>
+          <strong>C++ 数据同步</strong>：三维场景 / 模型相关数据在服务端与各端之间同步；
+          处理增量更新、版本对齐与断线后续传，保证多人打开同一项目时看到的数据一致；
+          与 Go 业务服配合：先校验项目权限，再允许进入同步通道。
+        </li>
+        <li>
+          <strong>数据存储</strong>：账号、角色、项目与业务数据落 MySQL；会话或热点权限信息可用 Redis；
+          Go 服务对外提供 HTTP 接口，供 Vue3 与同步侧调用。
+        </li>
+      </ul>
+      <div class="tech">
+        <span>Go</span><span>Vue3</span><span>C++</span><span>MySQL</span><span>Redis</span><span>HTTP</span>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="job-head">
+        <h3>北京菁合科技有限公司</h3>
+        <div class="when">2018.06 – 2021.02 · 北京</div>
+      </div>
+      <div class="sub">自研虚拟建造 App｜小米 / OPPO / 魅族上架｜UE4 + C++ IOCP</div>
+      <p>
+        前后端从 0 到 1 独立交付。UE4 客户端覆盖选房装修、社区交友、装饰搭配及 VR / MR；
+        服务端基于自研 C++ IOCP，支撑长连接联机与房间内实时同步。
+      </p>
+      <ul>
+        <li>
+          <strong>UE4 客户端（0→1）</strong>：选房与装修预览、社区交友、装饰搭配；支持 VR / MR；
+          完成与服务端联调，并上架小米 / OPPO / 魅族应用商店。
+        </li>
+        <li>
+          <strong>C++ IOCP 服务端</strong>：封装完成端口模型；多客户端长连接、心跳与断线重连；
+          房间状态同步、玩家角色互动、玩家数据同步，以及聊天与交互消息分发。
+        </li>
+        <li>
+          <strong>在线规模</strong>：服务器可承接约万人实时在线；完成商业交付与联调验收。
+        </li>
+      </ul>
+      <div class="tech">
+        <span>C++</span><span>IOCP</span><span>TCP</span><span>UE4</span><span>VR / MR</span>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="job-head">
+        <h3>广联达科技股份有限公司</h3>
+        <div class="when">2016.07 – 2018.05 · 北京</div>
+      </div>
+      <div class="sub">自研 BIM 装饰产品｜三维测量、算量、渲染、三维交互与 VR</div>
+      <p>
+        建筑行业工具产品开发。产品线年收入约 1.2 亿。转正后首个季度获公司季度之星。
+      </p>
+      <div class="tech">
+        <span>BIM</span><span>3D</span><span>VR</span>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="job-head">
+        <h3>北京荣广盛 · 建筑软件</h3>
+        <div class="when">2014.07 – 2015.12 · 北京</div>
+      </div>
+      <div class="sub">参与自营建筑软件开发｜后续 BIM / 3D 工具经验起点</div>
+    </div>
+
+    <h2>教育 / 语言 / 希望</h2>
+    <div class="card">
+      <ul>
+        <li><strong>教育</strong>：土木工程 · 本科</li>
+        <li><strong>语言</strong>：中文母语；英语可业务沟通；日语 N1，技术文档 / 邮件 / 规格可读写，会议可听解；口头技术交流可用中文或英语。</li>
+        <li><strong>希望</strong>：东京｜服务器后端（Go / C++ 优先）；游戏后端亦可；年收面议。</li>
+      </ul>
+    </div>
+
+    <p class="note">
+      投递版简历 · 服务端向
+    </p>
+  </div>
+</body>
+</html>
